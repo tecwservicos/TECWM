@@ -1,0 +1,6 @@
+{
+  "name": "Tec W Manuais",
+  "description": "Professional library of technical service manuals for Refrigeration, HVAC, White Goods, Electronics, and Electrical Systems.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

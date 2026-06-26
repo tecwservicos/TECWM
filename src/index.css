@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-primary: #6A1BFF;
+  --color-primary-dark: #4F10CE;
+  --color-primary-light: #8B5CF6;
+  --color-secondary: #16161C;
+  --color-brand-blue: #1D5CFF;
+  --color-brand-orange: #FF6600;
+  --color-surface-dark: #0F0F12;
+  --color-card-dark: #1E1E24;
+
+  /* Override standard zinc colors to apply Sophisticated Dark design globally */
+  --color-zinc-950: #0F0F12;
+  --color-zinc-900: #1E1E24;
+  --color-zinc-800: #2A2A32;
+  --color-zinc-700: #2D2D36;
+}
+
+/* Custom scrollbar styling for technical lists */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(106, 27, 255, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(106, 27, 255, 0.4);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #F8F9FC;
+  color: #121214;
+  overflow-x: hidden;
+}
+
+.dark-theme {
+  background-color: var(--color-surface-dark);
+  color: #F8F9FC;
+}
+
+/* Premium gradient backgrounds */
+.bg-gradient-premium {
+  background: linear-gradient(135deg, #6A1BFF 0%, #1D5CFF 100%);
+}
+
+.bg-gradient-orange {
+  background: linear-gradient(135deg, #FF6600 0%, #FF8800 100%);
+}
+
+/* Animated gear spin effect for a nice splash or technical indicator */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+

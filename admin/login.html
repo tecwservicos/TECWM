@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login - Tec W Manuais</title>
+  
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/pages.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body class="dark" style="background-color: var(--bg-color); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem; font-family: var(--font-sans, sans-serif);">
+
+  <div style="width: 100%; max-width: 420px;" class="fade-in">
+    <!-- Brand Info -->
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <div style="width: 48px; height: 48px; border-radius: 12px; background-color: var(--primary-color); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; color: white; box-shadow: var(--shadow-md);">
+        <span class="material-icons-outlined" style="font-size: 1.5rem;">admin_panel_settings</span>
+      </div>
+      <h2 style="font-size: 1.5rem; font-weight: 800; color: white;">Painel Administrativo</h2>
+      <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.25rem;">Autentique-se para gerenciar catálogos e usuários.</p>
+    </div>
+
+    <!-- Login Box -->
+    <div class="container-box" style="padding: 2rem; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 24px; box-shadow: var(--shadow-lg);">
+      <form id="admin-login-form" style="display: flex; flex-direction: column; gap: 1.25rem;">
+        
+        <div id="admin-login-error" style="display: none; background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #F87171; font-size: 0.75rem; font-weight: 700; padding: 0.75rem 1rem; border-radius: 12px; line-height: 1.4;">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label">E-mail do Administrador</label>
+          <div class="input-container">
+            <span class="material-icons-outlined input-icon" style="color: var(--text-muted); font-size: 1.125rem; position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);">email</span>
+            <input type="email" id="admin-email" class="input-field" placeholder="admin@tecw.com.br" value="admin@tecw.com.br" required style="padding-left: 2.75rem;" />
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label">Senha de Acesso</label>
+          <div class="input-container">
+            <span class="material-icons-outlined input-icon" style="color: var(--text-muted); font-size: 1.125rem; position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);">lock</span>
+            <input type="password" id="admin-password" class="input-field" placeholder="••••••••" value="admin123" required style="padding-left: 2.75rem;" />
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; border-radius: 14px; padding: 1rem; font-size: 0.875rem; font-weight: 800; justify-content: center; gap: 0.5rem; margin-top: 0.5rem;">
+          <span>Acessar Painel</span>
+          <span class="material-icons-outlined" style="font-size: 1.125rem;">login</span>
+        </button>
+      </form>
+      
+      <div style="text-align: center; margin-top: 1.5rem;">
+        <a href="../home.html" style="font-size: 0.75rem; color: var(--primary-light); font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem;">
+          <span class="material-icons-outlined" style="font-size: 0.875rem;">arrow_back</span>
+          <span>Voltar para a Área do Técnico</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Pure inline JS for simple administration auth flow
+    document.getElementById('admin-login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('admin-email').value.trim();
+      const password = document.getElementById('admin-password').value;
+      const errorDiv = document.getElementById('admin-login-error');
+      
+      if (email.toLowerCase() === 'admin@tecw.com.br' && password === 'admin123') {
+        localStorage.setItem('tecw_admin_logged', 'true');
+        window.location.href = 'dashboard.html';
+      } else {
+        errorDiv.textContent = 'Credenciais administrativas inválidas. Use o e-mail cadastrado do admin.';
+        errorDiv.style.display = 'block';
+        
+        // Shake feedback
+        const card = document.querySelector('.container-box');
+        card.style.animation = 'shake 0.3s';
+        setTimeout(() => { card.style.animation = ''; }, 300);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "appName": "Tec W Manuais",
+  "version": "2.0.0",
+  "apiEndpoint": "",
+  "maintenanceMode": false,
+  "features": {
+    "firebaseEnabled": false,
+    "adsEnabled": false,
+    "premiumEnabled": false,
+    "storageEnabled": false
+  }
+}

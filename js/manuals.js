@@ -1,138 +1,121 @@
-import { getCustomManuals, saveCustomManual, deleteCustomManual } from './storage.js';
+// Manuals Logic and Access Controller (Future-Ready Architecture)
+import { Database } from './api.js';
+import { Premium } from './subscription.js';
+import { saveCustomManual, deleteCustomManual } from './storage.js';
 
-let cachedManuals = [];
-let cachedCategories = [];
-let cachedBrands = [];
-
-// Load default catalogs from JSON
-async function loadStaticData() {
-  if (cachedManuals.length === 0) {
-    try {
-      const response = await fetch('data/manuals.json');
-      cachedManuals = await response.json();
-    } catch (e) {
-      console.warn("Failed to load manuals.json directly. Falling back to default lists.", e);
-      // Fallback inside client
-      cachedManuals = [];
+export const Manual = {
+  /**
+   * Central gatekeeper for technical manual access.
+   * Checks if manual is premium, verifies active subscriptions or ad-based temporary unlocks,
+   * then routes appropriately.
+   */
+  async open(manualId) {
+    const manual = await Database.getManualById(manualId);
+    if (!manual) {
+      console.error(`[Manual Service] Manual ID ${manualId} not found in database.`);
+      return;
     }
-  }
-  
-  if (cachedCategories.length === 0) {
-    try {
-      const response = await fetch('data/categories.json');
-      cachedCategories = await response.json();
-    } catch (e) {
-      console.warn("Failed to load categories.json directly. Fallback active.");
-      cachedCategories = [
-        { "id": "all", "name": "Todos", "icon": "description" },
-        { "id": "hvac", "name": "Ar Condicionado", "icon": "ac_unit" },
-        { "id": "refrig", "name": "Geladeiras", "icon": "kitchen" },
-        { "id": "washer", "name": "Lava e Seca", "icon": "local_laundry_service" }
-      ];
+
+    if (manual.premium) {
+      const isPro = Premium.check();
+      const isAdUnlocked = Premium.isUnlockedByAd(manualId);
+
+      if (!isPro && !isAdUnlocked) {
+        console.log(`[Manual Service] Access locked for manual ${manualId}. Redirecting to Premium upgrade.`);
+        // Redirect to premium.html with manualId reference so they can unlock it
+        window.location.href = `premium.html?id=${manualId}`;
+        return;
+      }
     }
-  }
 
-  if (cachedBrands.length === 0) {
-    try {
-      const response = await fetch('data/brands.json');
-      cachedBrands = await response.json();
-    } catch (e) {
-      cachedBrands = ["Brastemp", "Consul", "Electrolux", "Samsung", "LG", "Daikin"];
-    }
-  }
-}
+    // Access granted! Redirect to the dedicated PDF viewer component
+    window.location.href = `manual.html?id=${manualId}`;
+  },
 
-// Get unified list of manuals (JSON + Custom local)
-export async function getManuals() {
-  await loadStaticData();
-  const customList = getCustomManuals();
-  return [...customList, ...cachedManuals];
-}
-
-export async function getManualById(id) {
-  const allList = await getManuals();
-  return allList.find(m => m.id === id);
-}
-
-export async function getCategories() {
-  await loadStaticData();
-  return cachedCategories;
-}
-
-export async function getBrands() {
-  await loadStaticData();
-  return cachedBrands;
-}
-
-// Client-side search and filtering system
-export async function searchAndFilter(query = '', categoryId = 'all', brandName = 'all') {
-  const allList = await getManuals();
-  
-  return allList.filter(m => {
-    // 1. Text Search matching title, model, description or keywords
-    const matchesQuery = query === '' || 
-      m.title.toLowerCase().includes(query.toLowerCase()) ||
-      m.model.toLowerCase().includes(query.toLowerCase()) ||
-      m.description.toLowerCase().includes(query.toLowerCase()) ||
-      (m.keywords && m.keywords.some(k => k.toLowerCase().includes(query.toLowerCase())));
+  /**
+   * Client-side search and filtering system
+   */
+  async searchAndFilter(query = '', categoryId = 'all', brandName = 'all') {
+    const allList = await Database.getManuals();
+    
+    return allList.filter(m => {
+      // 1. Text Search matching title, model, description or keywords
+      const matchesQuery = query === '' || 
+        m.title.toLowerCase().includes(query.toLowerCase()) ||
+        m.model.toLowerCase().includes(query.toLowerCase()) ||
+        m.description.toLowerCase().includes(query.toLowerCase()) ||
+        (m.keywords && m.keywords.some(k => k.toLowerCase().includes(query.toLowerCase())));
+        
+      // 2. Category Check
+      let matchesCategory = true;
+      if (categoryId !== 'all') {
+        const categoryMapping = {
+          'hvac': 'Air Conditioners',
+          'refrig': 'Refrigerators',
+          'washer': 'Washing Machines',
+          'dryer': 'Dryers',
+          'microwave': 'Microwaves',
+          'compressor': 'Compressors',
+          'electronics': 'Electronics',
+          'tools': 'Tools'
+        };
+        const expectedName = categoryMapping[categoryId];
+        matchesCategory = m.category === expectedName || m.category === categoryId;
+      }
       
-    // 2. Category Check
-    // Convert categories display to match correctly
-    let matchesCategory = true;
-    if (categoryId !== 'all') {
-      const categoryMapping = {
-        'hvac': 'Air Conditioners',
-        'refrig': 'Refrigerators',
-        'washer': 'Washing Machines',
-        'dryer': 'Dryers',
-        'microwave': 'Microwaves',
-        'compressor': 'Compressors',
-        'electronics': 'Electronics',
-        'tools': 'Tools'
-      };
-      const expectedName = categoryMapping[categoryId];
-      matchesCategory = m.category === expectedName || m.category === categoryId;
+      // 3. Brand Check
+      const matchesBrand = brandName === 'all' || m.brand.toLowerCase() === brandName.toLowerCase();
+      
+      return matchesQuery && matchesCategory && matchesBrand;
+    });
+  },
+
+  /**
+   * Register a custom technician manual (LocalStorage fallback / future Firestore Storage upload)
+   */
+  async addCustom(manualData) {
+    const id = 'custom_' + Date.now();
+    const newManual = {
+      id,
+      title: manualData.title,
+      brand: manualData.brand,
+      model: manualData.model,
+      category: manualData.category,
+      description: manualData.description || "Manual técnico adicionado pelo usuário.",
+      coverImage: manualData.coverImage || "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=600",
+      pdfUrl: manualData.pdfUrl || "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+      premium: manualData.premium === true || manualData.premium === 'true',
+      views: 1,
+      downloads: 0,
+      favorites: 0,
+      createdAt: new Date().toISOString(),
+      pages: parseInt(manualData.pages || 12, 10),
+      fileSize: manualData.fileSize || "4.5 MB",
+      compatibleEquipment: manualData.compatibleEquipment || [manualData.model],
+      publicationDate: new Date().toISOString().split('T')[0]
+    };
+    
+    saveCustomManual(newManual);
+    return newManual;
+  },
+
+  /**
+   * Delete a registered custom manual
+   */
+  async delete(id) {
+    if (id.startsWith('custom_')) {
+      deleteCustomManual(id);
+      return true;
     }
-    
-    // 3. Brand Check
-    const matchesBrand = brandName === 'all' || m.brand.toLowerCase() === brandName.toLowerCase();
-    
-    return matchesQuery && matchesCategory && matchesBrand;
-  });
-}
-
-// Add/Upload a custom manual (Technician feature)
-export async function addCustomManual(manualData) {
-  const id = 'custom_' + Date.now();
-  const newManual = {
-    id,
-    title: manualData.title,
-    brand: manualData.brand,
-    model: manualData.model,
-    category: manualData.category,
-    description: manualData.description || "Manual técnico adicionado pelo usuário.",
-    coverImage: manualData.coverImage || "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=600",
-    pdfUrl: manualData.pdfUrl || "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-    premium: manualData.premium || false,
-    views: 1,
-    downloads: 0,
-    favorites: 0,
-    createdAt: new Date().toISOString(),
-    pages: manualData.pages || 12,
-    fileSize: manualData.fileSize || "4.5 MB",
-    compatibleEquipment: manualData.compatibleEquipment || [manualData.model],
-    publicationDate: new Date().toISOString().split('T')[0]
-  };
-  
-  saveCustomManual(newManual);
-  return newManual;
-}
-
-// Delete custom manual
-export async function deleteManual(id) {
-  if (id.startsWith('custom_')) {
-    deleteCustomManual(id);
-    return true;
+    return false;
   }
-  return false;
-}
+};
+
+// Export backward compatible legacy named bindings
+export const getManuals = () => Database.getManuals();
+export const getManualById = (id) => Database.getManualById(id);
+export const getCategories = () => Database.getCategories();
+export const getBrands = () => Database.getBrands();
+export const searchAndFilter = (q, c, b) => Manual.searchAndFilter(q, c, b);
+export const addCustomManual = (data) => Manual.addCustom(data);
+export const deleteManual = (id) => Manual.delete(id);

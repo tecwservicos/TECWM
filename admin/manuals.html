@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerenciar Catálogos - Admin</title>
+  
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/pages.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+  <style>
+    .admin-container {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: 100vh;
+      background-color: var(--bg-color);
+    }
+    .admin-sidebar {
+      background-color: #0E0C1B;
+      border-right: 1px solid var(--border-color);
+      padding: 2rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .admin-sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .admin-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1rem;
+      border-radius: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 700;
+      transition: all 0.25s;
+    }
+    .admin-nav-item:hover, .admin-nav-item.active {
+      color: white;
+      background-color: var(--primary-color);
+    }
+    .admin-content {
+      padding: 2.5rem;
+      overflow-y: auto;
+    }
+    .admin-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 1.5rem;
+    }
+    /* CMS Table Styles */
+    .cms-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    .cms-table th {
+      padding: 1rem;
+      border-bottom: 2px solid var(--border-color);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+    .cms-table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.8125rem;
+      color: var(--text-color);
+    }
+    .cms-table tr:hover {
+      background-color: rgba(255,255,255,0.01);
+    }
+    @media (max-width: 768px) {
+      .admin-container {
+        grid-template-columns: 1fr;
+      }
+      .admin-sidebar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="dark">
+
+  <script>
+    if (localStorage.getItem('tecw_admin_logged') !== 'true') {
+      window.location.href = 'login.html';
+    }
+  </script>
+
+  <div class="admin-container">
+    
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <span class="material-icons-outlined" style="color: var(--primary-light); font-size: 1.75rem;">admin_panel_settings</span>
+        <span style="font-size: 1.125rem; font-weight: 900; color: white; letter-spacing: -0.02em;">Painel <span style="color: var(--primary-light);">Admin</span></span>
+      </div>
+      
+      <nav class="admin-sidebar-nav">
+        <a href="dashboard.html" class="admin-nav-item">
+          <span class="material-icons-outlined">dashboard</span>
+          <span>Início</span>
+        </a>
+        <a href="manuals.html" class="admin-nav-item active">
+          <span class="material-icons-outlined">library_books</span>
+          <span>Catálogos</span>
+        </a>
+        <a href="users.html" class="admin-nav-item">
+          <span class="material-icons-outlined">people</span>
+          <span>Usuários</span>
+        </a>
+        <a href="analytics.html" class="admin-nav-item">
+          <span class="material-icons-outlined">trending_up</span>
+          <span>Estatísticas</span>
+        </a>
+      </nav>
+
+      <div style="margin-top: auto; display: flex; flex-direction: column; gap: 0.5rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+        <a href="../home.html" class="admin-nav-item" style="background-color: rgba(255,255,255,0.02);">
+          <span class="material-icons-outlined">home</span>
+          <span>App do Técnico</span>
+        </a>
+        <button id="admin-logout" class="admin-nav-item" style="border: none; background: none; text-align: left; cursor: pointer; width: 100%; color: #EF4444;">
+          <span class="material-icons-outlined">logout</span>
+          <span>Sair do Painel</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="admin-content">
+      <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <div>
+          <h1 style="font-size: 1.75rem; font-weight: 900; color: white;">Catálogos de Serviços</h1>
+          <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 0.25rem;">Cadastre novos esquemas de placas ou remova arquivos obsoletos da biblioteca.</p>
+        </div>
+        <button id="btn-open-create" class="btn btn-primary" style="border-radius: 12px; font-weight: 800; font-size: 0.8125rem; display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem;">
+          <span class="material-icons-outlined">add_circle</span>
+          <span>Cadastrar Novo Manual</span>
+        </button>
+      </header>
+
+      <!-- Search Toolbar -->
+      <div class="admin-card" style="padding: 1rem; margin-bottom: 1.5rem; display: flex; gap: 1rem;">
+        <div style="flex: 1; position: relative;">
+          <input type="text" id="cms-search-input" placeholder="Buscar manuais por título, modelo ou fabricante..." style="width: 100%; padding: 0.75rem 1rem; padding-left: 2.5rem; background-color: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; color: white; font-size: 0.8125rem; outline: none;" />
+          <span class="material-icons-outlined" style="position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.125rem;">search</span>
+        </div>
+      </div>
+
+      <!-- Table Card -->
+      <div class="admin-card" style="overflow-x: auto; padding: 0;">
+        <table class="cms-table">
+          <thead>
+            <tr>
+              <th>Capa</th>
+              <th>Título / Modelo</th>
+              <th>Fabricante</th>
+              <th>Categoria</th>
+              <th>Acesso</th>
+              <th>Visualizações</th>
+              <th style="text-align: right;">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="cms-manuals-tbody">
+            <!-- Rendered via JS -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { Database } from '../js/api.js';
+    import { Manual } from '../js/manuals.js';
+    import { showUploadManualModal, showToast } from '../js/ui.js';
+
+    const tbody = document.getElementById('cms-manuals-tbody');
+    const searchInput = document.getElementById('cms-search-input');
+    let manualsList = [];
+
+    // Load and render manuals
+    async function loadCMSData() {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7" style="text-align: center; padding: 4rem 1.5rem; color: var(--text-muted);">
+            Carregando catálogos...
+          </td>
+        </tr>
+      `;
+      manualsList = await Database.getManuals();
+      renderTable(manualsList);
+    }
+
+    function renderTable(list) {
+      tbody.innerHTML = '';
+      if (list.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align: center; padding: 4rem 1.5rem; color: var(--text-muted);">
+              Nenhum manual técnico encontrado.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      list.forEach(m => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="width: 60px;">
+            <img src="${m.coverImage}" style="width: 36px; height: 48px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-color);" />
+          </td>
+          <td>
+            <div style="font-weight: 700; color: white;">${m.title}</div>
+            <div style="font-size: 0.6875rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 0.125rem;">Modelo: ${m.model}</div>
+          </td>
+          <td><span style="font-weight: 600; color: white;">${m.brand}</span></td>
+          <td><span style="font-size: 0.75rem; background-color: var(--border-color); color: var(--text-color); padding: 0.2rem 0.5rem; border-radius: 6px;">${m.category}</span></td>
+          <td>
+            ${m.premium ? `
+              <span style="font-size: 0.6875rem; background-color: rgba(255,102,0,0.12); color: var(--accent-color); padding: 0.2rem 0.5rem; border-radius: 6px; font-weight: 800; border: 1px solid rgba(255,102,0,0.25);">PRO</span>
+            ` : `
+              <span style="font-size: 0.6875rem; background-color: rgba(255,255,255,0.03); color: var(--text-muted); padding: 0.2rem 0.5rem; border-radius: 6px; font-weight: 600;">Livre</span>
+            `}
+          </td>
+          <td><span style="font-weight: 700;">${m.views}</span></td>
+          <td style="text-align: right;">
+            ${m.id.startsWith('custom_') ? `
+              <button class="btn-delete" data-id="${m.id}" style="background: none; border: none; color: #EF4444; cursor: pointer; padding: 0.5rem;" title="Remover Manual">
+                <span class="material-icons-outlined" style="font-size: 1.125rem;">delete</span>
+              </button>
+            ` : `
+              <span style="font-size: 0.6875rem; color: var(--text-super-muted); font-style: italic; padding-right: 0.5rem;">Fixo</span>
+            `}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Add delete listeners
+      document.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const id = btn.getAttribute('data-id');
+          if (confirm('Deseja realmente excluir este manual técnico personalizado permanentemente?')) {
+            const success = await Manual.delete(id);
+            if (success) {
+              showToast('Manual técnico removido com sucesso!', 'success');
+              loadCMSData();
+            }
+          }
+        });
+      });
+    }
+
+    // Search filtration
+    searchInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase();
+      const filtered = manualsList.filter(m => 
+        m.title.toLowerCase().includes(q) || 
+        m.model.toLowerCase().includes(q) || 
+        m.brand.toLowerCase().includes(q)
+      );
+      renderTable(filtered);
+    });
+
+    // Create Modal Trigger
+    document.getElementById('btn-open-create').addEventListener('click', () => {
+      showUploadManualModal(async (formData) => {
+        // Form submitted
+        formData.premium = true; // All admin added manuals default to PRO
+        const newManual = await Manual.addCustom(formData);
+        showToast('Sucesso! Novo manual catalogado no sistema.', 'success');
+        loadCMSData();
+      });
+    });
+
+    // Admin Logout
+    document.getElementById('admin-logout').addEventListener('click', () => {
+      localStorage.removeItem('tecw_admin_logged');
+      window.location.href = 'login.html';
+    });
+
+    // Init
+    loadCMSData();
+  </script>
+</body>
+</html>

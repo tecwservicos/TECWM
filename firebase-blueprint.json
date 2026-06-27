@@ -1,0 +1,336 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile document containing authentication status, licensing tier, and account creation time.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Unique user ID from Firebase Authentication"
+        },
+        "nome": {
+          "type": "string",
+          "description": "Full name of the technician"
+        },
+        "email": {
+          "type": "string",
+          "description": "Registered email address"
+        },
+        "premium": {
+          "type": "boolean",
+          "description": "Flag indicating if user has active PRO subscription access"
+        },
+        "subscriptionId": {
+          "type": "string",
+          "description": "Identifier linking to the active subscription document, or null if on free plan"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Firestore Server Timestamp of user registration"
+        }
+      },
+      "required": ["uid", "nome", "email", "premium", "createdAt"]
+    },
+    "Manual": {
+      "title": "Technical Manual",
+      "description": "Details, specifications, metadata and references to physical files for a technician service manual or diagram.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the manual"
+        },
+        "titulo": {
+          "type": "string",
+          "description": "Display title of the technical manual"
+        },
+        "marca": {
+          "type": "string",
+          "description": "Brand or manufacturer name (e.g. Brastemp, Electrolux)"
+        },
+        "modelo": {
+          "type": "string",
+          "description": "Model number of the device/equipment"
+        },
+        "categoria": {
+          "type": "string",
+          "description": "Category name or ID (e.g. Washing Machines, Refrigerators)"
+        },
+        "descricao": {
+          "type": "string",
+          "description": "Brief summary or instructions on what is covered in the manual"
+        },
+        "imagem": {
+          "type": "string",
+          "description": "URL of the manual's cover image hosted in Firebase Storage"
+        },
+        "pdf": {
+          "type": "string",
+          "description": "URL of the manual's PDF file hosted in Firebase Storage"
+        },
+        "premium": {
+          "type": "boolean",
+          "description": "True if manual requires PRO membership or ad-unlock"
+        },
+        "downloads": {
+          "type": "number",
+          "description": "Total number of times the manual has been downloaded"
+        },
+        "views": {
+          "type": "number",
+          "description": "Total number of times the manual has been viewed"
+        },
+        "keywords": {
+          "type": "array",
+          "description": "List of searchable keywords associated with this equipment"
+        },
+        "paginas": {
+          "type": "number",
+          "description": "Total number of pages inside the PDF"
+        },
+        "tamanhoArquivo": {
+          "type": "number",
+          "description": "Size of the PDF file in MB"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Firestore Server Timestamp of catalog listing creation"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Firestore Server Timestamp of last modification"
+        }
+      },
+      "required": ["id", "titulo", "marca", "modelo", "categoria", "imagem", "pdf", "premium", "downloads", "views", "paginas", "tamanhoArquivo", "createdAt", "updatedAt"]
+    },
+    "Favorite": {
+      "title": "Favorite Association",
+      "description": "A mapping indicating that a specific user has bookmarked/favorited a manual.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "ID of the user who favorited the manual"
+        },
+        "manualId": {
+          "type": "string",
+          "description": "ID of the favorited manual"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Firestore Server Timestamp of bookmark event"
+        }
+      },
+      "required": ["uid", "manualId", "createdAt"]
+    },
+    "History": {
+      "title": "Access History",
+      "description": "Log of a manual being opened by a technician, tracking active progress.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "User who opened the manual"
+        },
+        "manualId": {
+          "type": "string",
+          "description": "Manual that was opened"
+        },
+        "openedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of the last access"
+        },
+        "lastPage": {
+          "type": "number",
+          "description": "Last viewed page index"
+        },
+        "readingTime": {
+          "type": "number",
+          "description": "Estimated reading time spent in seconds"
+        }
+      },
+      "required": ["uid", "manualId", "openedAt", "lastPage", "readingTime"]
+    },
+    "Download": {
+      "title": "Download Record",
+      "description": "Explicit track of user offline storage downloads of manuals.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "User who downloaded the file"
+        },
+        "manualId": {
+          "type": "string",
+          "description": "ID of downloaded manual"
+        },
+        "downloadedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of download"
+        },
+        "device": {
+          "type": "string",
+          "description": "User-agent or platform identifier for download context"
+        }
+      },
+      "required": ["uid", "manualId", "downloadedAt"]
+    },
+    "Ad": {
+      "title": "Ad Watch Unlock",
+      "description": "Temporary manual access credentials generated by watching rewarded ads.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "User who watched the ad"
+        },
+        "manualId": {
+          "type": "string",
+          "description": "Manual ID unlocked by this ad watch"
+        },
+        "watchedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when ad watching ended"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the access window expires (e.g. +24 hours)"
+        },
+        "adType": {
+          "type": "string",
+          "description": "Identifier for ad provider/type"
+        }
+      },
+      "required": ["uid", "manualId", "watchedAt", "expiresAt", "adType"]
+    },
+    "Subscription": {
+      "title": "Billing Subscription",
+      "description": "Payment tier and billing status records synced from Stripe or app store provider.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "User owner of the subscription"
+        },
+        "plan": {
+          "type": "string",
+          "description": "Subscription level name (e.g. Monthly PRO, Annual PRO)"
+        },
+        "status": {
+          "type": "string",
+          "description": "Subscription state (e.g. active, canceled, trialing, past_due)"
+        },
+        "provider": {
+          "type": "string",
+          "description": "Billing provider (e.g. Stripe, GooglePlay, AppStore)"
+        },
+        "startedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of subscription activation"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "End date of paid term or grace period"
+        },
+        "autoRenew": {
+          "type": "boolean",
+          "description": "Whether plan auto-renews at next billing cycle"
+        }
+      },
+      "required": ["uid", "plan", "status", "provider", "startedAt", "expiresAt", "autoRenew"]
+    },
+    "Category": {
+      "title": "Manual Category",
+      "description": "Logical groupings of equipments like HVAC, Refrigerators, washing machines.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Slug-like category ID used in routing and filter states"
+        },
+        "nome": {
+          "type": "string",
+          "description": "Localized name displayed in the UI"
+        },
+        "icone": {
+          "type": "string",
+          "description": "Lucide icon or Google material symbol identifier"
+        },
+        "imagem": {
+          "type": "string",
+          "description": "Rich category card background image URL"
+        }
+      },
+      "required": ["id", "nome", "icone"]
+    },
+    "Brand": {
+      "title": "Equipment Brand",
+      "description": "Details of supporting brand manufactures.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Slug-like ID of brand"
+        },
+        "nome": {
+          "type": "string",
+          "description": "Display name of brand"
+        },
+        "logo": {
+          "type": "string",
+          "description": "Brand logo symbol image asset URL"
+        }
+      },
+      "required": ["id", "nome"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Individual profile credentials and preferences indexed by Auth UID."
+    },
+    "/manuals/{manualId}": {
+      "schema": "Manual",
+      "description": "Collection of all service catalogs, both base presets and custom user uploads."
+    },
+    "/favorites/{favoriteId}": {
+      "schema": "Favorite",
+      "description": "Global user favorites mappings tracking save bookmarks."
+    },
+    "/history/{historyId}": {
+      "schema": "History",
+      "description": "Access tracking timeline logs measuring page progress."
+    },
+    "/downloads/{downloadId}": {
+      "schema": "Download",
+      "description": "Timeline metrics tracking equipment catalog downloads."
+    },
+    "/ads/{adId}": {
+      "schema": "Ad",
+      "description": "Logs tracking ad-watched session keys with validity expiry timestamps."
+    },
+    "/subscriptions/{subscriptionId}": {
+      "schema": "Subscription",
+      "description": "Stripe/Store billing registers determining PRO availability status."
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Pre-populated standard equipment groupings."
+    },
+    "/brands/{brandId}": {
+      "schema": "Brand",
+      "description": "Manufactures index displaying branding metadata."
+    }
+  }
+}

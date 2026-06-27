@@ -23,6 +23,12 @@ export default defineConfig(() => {
           favorites: path.resolve(__dirname, 'favorites.html'),
           profile: path.resolve(__dirname, 'profile.html'),
           settings: path.resolve(__dirname, 'settings.html'),
+          premium: path.resolve(__dirname, 'premium.html'),
+          admin_login: path.resolve(__dirname, 'admin/login.html'),
+          admin_dashboard: path.resolve(__dirname, 'admin/dashboard.html'),
+          admin_manuals: path.resolve(__dirname, 'admin/manuals.html'),
+          admin_users: path.resolve(__dirname, 'admin/users.html'),
+          admin_analytics: path.resolve(__dirname, 'admin/analytics.html'),
         }
       }
     },

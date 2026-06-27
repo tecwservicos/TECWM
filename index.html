@@ -1,13 +1,122 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- SEO Tags -->
+  <title>Tec W Manuais - Plataforma de Manuais Técnicos e Esquemas Elétricos</title>
+  <meta name="description" content="Encontre manuais de serviço, esquemas elétricos e diagramas de placas de refrigeração e climatização de forma instantânea e totalmente offline." />
+  <meta name="keywords" content="manual tecnico, esquema eletrico, climatizacao, refrigeracao, lavadora, ar condicionado, consul, brastemp, electrolux" />
+  
+  <!-- Social Media Open Graph & Twitter Cards -->
+  <meta property="og:title" content="Tec W Manuais - Catálogos Técnicos" />
+  <meta property="og:description" content="Encontre manuais de serviço e esquemas elétricos oficiais instantaneamente." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=600" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  
+  <!-- Google Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+</head>
+<body data-page="index" class="dark">
 
+  <div class="app-layout">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-container">
+        <div class="brand-wrapper">
+          <div class="brand-icon">
+            <i data-lucide="cpu" style="color: var(--primary-light); width: 22px; height: 22px;"></i>
+          </div>
+          <span class="brand-title">Tec W <span style="color: var(--primary-light);">Manuais</span></span>
+        </div>
+        
+        <div style="display: flex; gap: 0.75rem;">
+          <a href="login.html" class="btn btn-secondary" style="padding: 0.5rem 1rem; border-radius: 10px;">Entrar</a>
+          <a href="register.html" class="btn btn-primary" style="padding: 0.5rem 1rem; border-radius: 10px;">Cadastrar-se</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Hero -->
+    <main class="container-box fade-in" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+      <section class="hero-section">
+        <span class="hero-tagline">
+          <i data-lucide="shield" style="width: 12px; height: 12px; display: inline-block; vertical-align: middle;"></i>
+          Portal de Engenharia & Mecânica
+        </span>
+        <h1 class="hero-title">
+          Toda a biblioteca de <span class="text-gradient">manuais de serviço</span> na palma da sua mão.
+        </h1>
+        <p class="hero-description">
+          Esquemas de placas eletrônicas, códigos de erros de sensores, diagramas elétricos e dicas de campo oficiais para Brastemp, Consul, Electrolux e mais.
+        </p>
+        
+        <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; justify-content: center;">
+          <a href="login.html" class="btn btn-primary" style="padding: 0.875rem 2rem; font-size: 0.9375rem; border-radius: 16px;">
+            <span>Acessar Biblioteca</span>
+            <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+          </a>
+          <a href="register.html" class="btn btn-secondary" style="padding: 0.875rem 2rem; font-size: 0.9375rem; border-radius: 16px;">
+            <span>Criar Conta Gratuita</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Grid Highlights -->
+      <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 3rem 0; padding: 0 1.5rem;">
+        <!-- Feature 1 -->
+        <div style="background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 1.75rem; border-radius: 24px; display: flex; flex-direction: column; gap: 0.75rem;">
+          <div style="width: 44px; height: 44px; border-radius: 12px; background-color: var(--primary-transparent); display: flex; align-items: center; justify-content: center; color: var(--primary-light);">
+            <i data-lucide="search" style="width: 22px; height: 22px;"></i>
+          </div>
+          <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-color);">Busca Inteligente</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.5;">Pesquise por marca, modelo, tipo de componente ou código de erro instantaneamente.</p>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div style="background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 1.75rem; border-radius: 24px; display: flex; flex-direction: column; gap: 0.75rem;">
+          <div style="width: 44px; height: 44px; border-radius: 12px; background-color: var(--primary-transparent); display: flex; align-items: center; justify-content: center; color: var(--primary-light);">
+            <i data-lucide="zap" style="width: 22px; height: 22px;"></i>
+          </div>
+          <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-color);">Leitor de Diagramas</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.5;">Diagramas vetoriais otimizados com pinagens eletrônicas descritas de forma clara para campo.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div style="background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 1.75rem; border-radius: 24px; display: flex; flex-direction: column; gap: 0.75rem;">
+          <div style="width: 44px; height: 44px; border-radius: 12px; background-color: var(--primary-transparent); display: flex; align-items: center; justify-content: center; color: var(--primary-light);">
+            <i data-lucide="cloud-lightning" style="width: 22px; height: 22px;"></i>
+          </div>
+          <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-color);">Modo 100% Offline</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.5;">Salve catálogos inteiros diretamente no seu celular e abra-os onde não há sinal de internet.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Simple footer -->
+    <footer style="padding: 2rem 1.5rem; text-align: center; border-top: 1px solid var(--border-color); font-size: 0.75rem; color: var(--text-muted);">
+      <p>&copy; 2026 Tec W Manuais. Todos os direitos reservados. Feito para técnicos profissionais.</p>
+    </footer>
+  </div>
+
+  <!-- Lucide Script -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  </script>
+  
+  <!-- Main Application Coordinator Module -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

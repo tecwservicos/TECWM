@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+:root {
+  /* Light Mode Variables */
+  --bg-color: #F8F9FA;
+  --surface-color: #FFFFFF;
+  --surface-hover: #F1F3F5;
+  --card-bg: #FFFFFF;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --text-color: #212529;
+  --text-muted: #6C757D;
+  --text-super-muted: #ADB5BD;
+  --bottom-bar-bg: #FFFFFF;
+  
+  --primary-color: #6A1BFF;
+  --primary-light: #8B5CF6;
+  --primary-dark: #4F10CE;
+  --primary-transparent: rgba(106, 27, 255, 0.08);
+  --accent-color: #FF6600;
+  --accent-blue: #1D5CFF;
+  
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.08);
+  
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+  
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+
+/* Sophisticated Dark Mode Theme (Active by default) */
+html.dark, body.dark {
+  --bg-color: #0F0F12;
+  --surface-color: #16161C;
+  --surface-hover: #25252D;
+  --card-bg: #1E1E24;
+  --border-color: rgba(255, 255, 255, 0.06);
+  --text-color: #F8F9FA;
+  --text-muted: #9E9EAF;
+  --text-super-muted: #5C5C6E;
+  --bottom-bar-bg: #16161C;
+  
+  --primary-transparent: rgba(139, 92, 246, 0.15);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--font-sans);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  overflow-x: hidden;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--primary-light);
+  color: white;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-super-muted);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-light);
+}
+
+/* Typography styles */
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Helper utility classes */
+.container-box {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Unified layout structure */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 70px; /* offset for bottom bar */
+}
+
+/* Focus mode & hidden states */
+.hidden {
+  display: none !important;
+}

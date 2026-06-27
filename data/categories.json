@@ -1,0 +1,11 @@
+[
+  { "id": "all", "name": "All Manuals", "icon": "description" },
+  { "id": "hvac", "name": "Air Conditioners", "icon": "ac_unit" },
+  { "id": "refrig", "name": "Refrigerators", "icon": "kitchen" },
+  { "id": "washer", "name": "Washing Machines", "icon": "local_laundry_service" },
+  { "id": "dryer", "name": "Dryers", "icon": "mode_fan" },
+  { "id": "microwave", "name": "Microwaves", "icon": "microwave" },
+  { "id": "compressor", "name": "Compressors", "icon": "settings_input_component" },
+  { "id": "electronics", "name": "Electronics", "icon": "memory" },
+  { "id": "tools", "name": "Tools", "icon": "build" }
+]

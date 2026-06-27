@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leitor Técnico - Tec W Manuais</title>
+  
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+</head>
+<body data-page="manual" class="dark" style="padding-bottom: 0;">
+
+  <!-- Fullscreen technical reader interface -->
+  <div class="pdf-reader-fullscreen">
+    <!-- Toolbar -->
+    <header class="pdf-toolbar">
+      <div style="display: flex; align-items: center; gap: 0.75rem; min-width: 0;">
+        <button id="btn-exit-reader" class="btn-icon" style="background: none; border: none; border-radius: 50%;" title="Voltar para Início">
+          <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
+        </button>
+        <div style="min-width: 0;">
+          <h2 id="viewer-title" style="font-size: 0.9375rem; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-color);">Manual de Serviço</h2>
+          <p id="viewer-model-subtitle" style="font-size: 0.6875rem; color: var(--text-muted); font-family: var(--font-mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Modelo: BRE80AK</p>
+        </div>
+      </div>
+      
+      <!-- Toolbar Control Items -->
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <button id="btn-bookmark-pdf" class="btn-icon" style="background: none; border: none; border-radius: 50%;" title="Marcar Página">
+          <i data-lucide="bookmark" style="width: 18px; height: 18px;"></i>
+        </button>
+        <button onclick="window.print()" class="btn-icon" style="background: none; border: none; border-radius: 50%;" title="Imprimir Esquema">
+          <i data-lucide="printer" style="width: 18px; height: 18px;"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Canvas viewport area -->
+    <div class="pdf-canvas-container">
+      <!-- Premium lock overlay (hidden by default) -->
+      <div id="reader-premium-gate" class="pdf-premium-lock" style="display: none;">
+        <div class="premium-lock-icon">
+          <i data-lucide="lock" style="width: 32px; height: 32px;"></i>
+        </div>
+        <h2 style="font-size: 1.5rem; font-weight: 800; color: white; margin-bottom: 0.5rem;">Documento Restrito</h2>
+        <p style="font-size: 0.875rem; color: #D1D5DB; max-width: 340px; line-height: 1.5; margin-bottom: 2rem;">Este manual pertence à biblioteca avançada de parceiros credenciados. Ative sua assinatura PRO para acessá-lo.</p>
+        
+        <div style="display: flex; gap: 1rem;">
+          <button onclick="window.location.href='home.html'" class="btn btn-secondary" style="border-radius: 12px; font-size: 0.8125rem;">Voltar ao Início</button>
+          <button id="reader-activate-premium-btn" class="btn btn-primary" style="border-radius: 12px; font-size: 0.8125rem;">Ativar Acesso PRO</button>
+        </div>
+      </div>
+
+      <!-- Real Dynamic Mock canvas representing PDF -->
+      <div id="embedded-pdf-canvas" style="width: 100%; display: flex; justify-content: center;">
+        <!-- Generated inside js/app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  </script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

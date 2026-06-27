@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entrar - Tec W Manuais</title>
+  
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+</head>
+<body data-page="login" class="dark">
+
+  <div class="auth-page fade-in">
+    <!-- Mini header/brand -->
+    <div class="auth-header">
+      <div class="auth-logo">
+        <div class="brand-icon">
+          <i data-lucide="cpu" style="color: var(--primary-light); width: 22px; height: 22px;"></i>
+        </div>
+        <span class="brand-title">Tec W <span style="color: var(--primary-light);">Manuais</span></span>
+      </div>
+    </div>
+
+    <!-- Login card -->
+    <div class="auth-card scale-in">
+      <h2 class="auth-card-title">Acesse sua Conta</h2>
+      <p class="auth-card-subtitle">Informe suas credenciais de técnico credenciado.</p>
+      
+      <form id="login-form" style="display: flex; flex-direction: column; gap: 0.25rem;">
+        <div class="form-group">
+          <label class="form-label" for="login-email">Endereço de E-mail</label>
+          <div class="input-container">
+            <i class="input-icon" data-lucide="mail"></i>
+            <input type="email" id="login-email" class="input-field" placeholder="Ex: tecnico@empresa.com.br" required value="demo@tecw.com.br" />
+          </div>
+        </div>
+        
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <label class="form-label" for="login-password">Senha de Acesso</label>
+            <a href="#" style="font-size: 0.75rem; font-weight: 600; color: var(--primary-light);">Esqueceu a senha?</a>
+          </div>
+          <div class="input-container">
+            <i class="input-icon" data-lucide="lock"></i>
+            <input type="password" id="login-password" class="input-field" placeholder="Insira sua senha" required value="password123" />
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.875rem; border-radius: 14px; font-size: 0.9375rem;">
+          <span>Entrar no Sistema</span>
+          <i data-lucide="log-in" style="width: 16px; height: 16px;"></i>
+        </button>
+      </form>
+      
+      <div class="divider">
+        <span>Ou entre com</span>
+      </div>
+      
+      <button id="btn-google-login" class="btn btn-secondary" style="width: 100%; padding: 0.875rem; border-radius: 14px; justify-content: center;">
+        <svg viewBox="0 0 24 24" style="width: 18px; height: 18px;">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+        </svg>
+        <span>Acessar com Conta Google</span>
+      </button>
+
+      <p class="auth-footer-text">Não tem credenciais? <a href="register.html">Cadastre-se grátis</a></p>
+    </div>
+
+    <!-- Small credit footer -->
+    <div style="text-align: center; font-size: 0.75rem; color: var(--text-super-muted);">
+      Selecione demo@tecw.com.br / password123 para testar instantaneamente.
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  </script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

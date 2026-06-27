@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Favoritos - Tec W Manuais</title>
+  
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+</head>
+<body data-page="favorites" class="dark">
+
+  <div class="app-layout">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-container">
+        <div class="brand-wrapper">
+          <div class="brand-icon">
+            <i data-lucide="cpu" style="color: var(--primary-light); width: 22px; height: 22px;"></i>
+          </div>
+          <span class="brand-title">Tec W <span style="color: var(--primary-light);">Manuais</span></span>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span id="header-sub-badge" style="font-size: 0.625rem; font-weight: 800; background-color: var(--primary-transparent); color: white; padding: 0.25rem 0.625rem; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.05em;">FREE</span>
+          <div style="width: 32px; height: 32px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8125rem; font-weight: 700; cursor: pointer;" onclick="window.location.href='profile.html'">
+            <span id="header-user-name">T</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main style="flex: 1; padding: 1.5rem 0 5rem;">
+      <section class="container-box fade-in" style="padding: 0 1.5rem; margin-bottom: 1.5rem;">
+        <h1 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.25rem; color: var(--text-color);">Meus Favoritos</h1>
+        <p style="font-size: 0.8125rem; color: var(--text-muted);">Esquemas elétricos e manuais de serviço salvos por você para acesso rápido.</p>
+      </section>
+
+      <!-- Empty favorites state -->
+      <section id="empty-favorites-state" style="display: none; text-align: center; padding: 4rem 1.5rem; max-width: 420px; margin: 0 auto;" class="fade-in">
+        <div style="width: 64px; height: 64px; border-radius: 50%; background-color: rgba(239, 68, 68, 0.1); display: flex; align-items: center; justify-content: center; color: #EF4444; margin: 0 auto 1.5rem;">
+          <i data-lucide="heart" style="width: 28px; height: 28px;"></i>
+        </div>
+        <h2 style="font-size: 1.125rem; font-weight: 800; color: var(--text-color); margin-bottom: 0.5rem;">Lista de Favoritos Vazia</h2>
+        <p style="font-size: 0.8125rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem;">Ainda não favoritou nenhum esquema? Abra o detalhe de qualquer manual e clique em "Favoritar" para fixá-lo aqui.</p>
+        <a href="search.html" class="btn btn-primary" style="border-radius: 12px; font-size: 0.8125rem;">Buscar Manuais Técnicos</a>
+      </section>
+
+      <!-- Favorites grid -->
+      <section class="container-box fade-in">
+        <div id="favorites-results-grid" class="manuals-grid">
+          <!-- Populated dynamically -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <button class="nav-item" data-target="home">
+        <div class="nav-icon-wrapper">
+          <i data-lucide="home" style="width: 20px; height: 20px;"></i>
+        </div>
+        <span>Início</span>
+      </button>
+      <button class="nav-item" data-target="search">
+        <div class="nav-icon-wrapper">
+          <i data-lucide="search" style="width: 20px; height: 20px;"></i>
+        </div>
+        <span>Buscar</span>
+      </button>
+      <button class="nav-item" data-target="favorites">
+        <div class="nav-icon-wrapper">
+          <i data-lucide="heart" style="width: 20px; height: 20px;"></i>
+        </div>
+        <span>Favoritos</span>
+      </button>
+      <button class="nav-item" data-target="profile">
+        <div class="nav-icon-wrapper">
+          <i data-lucide="user" style="width: 20px; height: 20px;"></i>
+        </div>
+        <span>Perfil</span>
+      </button>
+      <button class="nav-item" data-target="settings">
+        <div class="nav-icon-wrapper">
+          <i data-lucide="settings" style="width: 20px; height: 20px;"></i>
+        </div>
+        <span>Ajustes</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  </script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

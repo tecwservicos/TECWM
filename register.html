@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastrar-se - Tec W Manuais</title>
+  
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+</head>
+<body data-page="register" class="dark">
+
+  <div class="auth-page fade-in">
+    <div class="auth-header">
+      <div class="auth-logo">
+        <div class="brand-icon">
+          <i data-lucide="cpu" style="color: var(--primary-light); width: 22px; height: 22px;"></i>
+        </div>
+        <span class="brand-title">Tec W <span style="color: var(--primary-light);">Manuais</span></span>
+      </div>
+    </div>
+
+    <!-- Registration card -->
+    <div class="auth-card scale-in">
+      <h2 class="auth-card-title">Crie sua Conta Grátis</h2>
+      <p class="auth-card-subtitle">Entre para a maior comunidade técnica de refrigeração.</p>
+      
+      <form id="register-form" style="display: flex; flex-direction: column; gap: 0.25rem;">
+        <div class="form-group">
+          <label class="form-label" for="reg-name">Nome Completo</label>
+          <div class="input-container">
+            <i class="input-icon" data-lucide="user"></i>
+            <input type="text" id="reg-name" class="input-field" placeholder="Ex: João da Silva" required />
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="reg-email">E-mail Profissional</label>
+          <div class="input-container">
+            <i class="input-icon" data-lucide="mail"></i>
+            <input type="email" id="reg-email" class="input-field" placeholder="Ex: joao@refrigeracao.com.br" required />
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="reg-password">Senha de Segurança</label>
+          <div class="input-container">
+            <i class="input-icon" data-lucide="lock"></i>
+            <input type="password" id="reg-password" class="input-field" placeholder="No mínimo 6 dígitos" required />
+          </div>
+        </div>
+        
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label class="form-label" for="reg-confirm">Confirmar Senha</label>
+          <div class="input-container">
+            <i class="input-icon" data-lucide="shield-check"></i>
+            <input type="password" id="reg-confirm" class="input-field" placeholder="Repita a senha inserida" required />
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.875rem; border-radius: 14px; font-size: 0.9375rem;">
+          <span>Criar Minha Conta</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </button>
+      </form>
+
+      <p class="auth-footer-text">Já possui credenciais? <a href="login.html">Faça login</a></p>
+    </div>
+
+    <!-- Small footer spacing -->
+    <div style="height: 20px;"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  </script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Início - Tec W Manuais</title>
+  
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+</head>
+<body data-page="home" class="dark">
+
+  <div class="app-layout">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-container">
+        <div class="brand-wrapper">
+          <div class="brand-icon">
+            <i data-lucide="cpu" style="color: var(--primary-light); width: 22px; height: 22px;"></i>
+          </div>
+          <span class="brand-title">Tec W <span style="color: var(--primary-light);">Manuais</span></span>
+        </div>
+        
+        <!-- User account indicator -->
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span id="header-sub-badge" style="font-size: 0.625rem; font-weight: 800; background-color: var(--primary-transparent); color: white; padding: 0.25rem 0.625rem; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.05em;">FREE</span>
+          <div style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;" onclick="window.location.href='profile.html'">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8125rem; font-weight: 700;">
+              <span id="header-user-name">T</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main style="flex: 1; padding: 1.5rem 0 5rem;">
+      <!-- Welcome Intro -->
+      <section class="container-box fade-in" style="margin-bottom: 2rem; padding: 0 1.5rem;">
+        <h1 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 0.25rem; color: var(--text-color);">Olá, Colega Técnico!</h1>
+        <p style="font-size: 0.875rem; color: var(--text-muted);">Encontre e salve diagramas de climatização de forma rápida e segura.</p>
+      </section>
+
+      <!-- Premium Billing Showcase Banner (shown to FREE tier users) -->
+      <section class="container-box fade-in" id="premium-hero-banner" style="padding: 0 1.5rem; margin-bottom: 2.5rem; display: none;">
+        <div style="background: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%); border-radius: 24px; padding: 1.75rem 2rem; color: white; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem; box-shadow: var(--shadow-lg);">
+          <div style="max-width: 600px;">
+            <span style="font-size: 0.625rem; font-weight: 800; background-color: var(--accent-color); color: white; padding: 0.25rem 0.625rem; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; margin-bottom: 0.75rem;">DESBLOQUEIE O PRO</span>
+            <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">Acesso Ilimitado de Alta Performance</h2>
+            <p style="font-size: 0.875rem; color: #E0E7FF; line-height: 1.5;">Ative a biblioteca PRO e remova propagandas. Baixe e guarde esquemas de placas de forma offline.</p>
+          </div>
+          <button id="banner-upgrade-btn" class="btn btn-accent" style="padding: 0.875rem 1.75rem; border-radius: 14px; font-weight: 700; border: none;">
+            <span>Ativar por R$ 29,90</span>
+            <i data-lucide="zap" style="width: 14px; height: 14px; fill: white;"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- Recent History Section -->
+      <section class="container-box fade-in" style="margin-bottom: 2.5rem;">
+        <div class="section-header">
+          <h3 class="section-title">Continuar Lendo</h3>
+          <a href="search.html" class="section-link">Ver histórico completo</a>
+        </div>
+        
+        <!-- Empty History state mockup -->
+        <div id="empty-history-state" style="text-align: center; padding: 2.5rem 1.5rem; background-color: var(--surface-color); border: 1px dashed var(--border-color); border-radius: 20px; margin: 0 1.5rem;" class="fade-in">
+          <i data-lucide="clock" style="width: 32px; height: 32px; color: var(--text-super-muted); margin-bottom: 0.75rem;"></i>
+          <p style="font-size: 0.8125rem; color: var(--text-muted);">Você ainda não acessou nenhum manual. Escolha um catálogo abaixo.</p>
+        </div>
+        
+        <div id="recent-history-grid" class="manuals-grid" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); display: none;">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- Popular Manuals -->
+      <section class="container-box fade-in">
+        <div class="section-header">
+          <h3 class="section-title">Principais Manuais e Esquemas</h3>
+          <a href="search.html" class="section-link">Ver catálogo geral</a>
+        </div>
+        
+        <div id="popular-manuals-grid" class="manuals-grid">
+          <!-- Dynamically populated with manual cards -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Floating Action Button (FAB) for Technician uploads -->
+    <button id="fab-upload-manual" class="btn btn-primary animate-pulse" style="position: fixed; bottom: 85px; right: 20px; width: 52px; height: 52px; border-radius: 50%; box-shadow: 0 8px 20px rgba(106, 27, 255, 0.4); z-index: 850; padding: 0;">
+      <i data-lucide="plus" style="width: 24px; height: 24px;"></i>
+    </button>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <button class="nav-item" data-target="home">
+        <div class="nav-icon-wrapper">
+          <i data-lucide="home" style="width: 20px; height: 20px;"></i>
+        </div>
+        <span>Início</span>
+      </button>
+      <button class="nav-item" data-target="search">
+        <div class="nav-icon-wrapper">
+          <i data-lucide="search" style="width: 20px; height: 20px;"></i>
+        </div>
+        <span>Buscar</span>
+      </button>
+      <button class="nav-item" data-target="favorites">
+        <div class="nav-icon-wrapper">
+          <i data-lucide="heart" style="width: 20px; height: 20px;"></i>
+        </div>
+        <span>Favoritos</span>
+      </button>
+      <button class="nav-item" data-target="profile">
+        <div class="nav-icon-wrapper">
+          <i data-lucide="user" style="width: 20px; height: 20px;"></i>
+        </div>
+        <span>Perfil</span>
+      </button>
+      <button class="nav-item" data-target="settings">
+        <div class="nav-icon-wrapper">
+          <i data-lucide="settings" style="width: 20px; height: 20px;"></i>
+        </div>
+        <span>Ajustes</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Script triggers -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  </script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
